@@ -65,6 +65,7 @@ export class DataService {
                   url += motif + "&bilan=" + bilan;
               let req = this.http
                          .get(url)
+                         .map((r: Response)=>r.json());
            return req;
     }
     public chargerMedicaments(nom: string){
@@ -79,7 +80,8 @@ export class DataService {
             url += motif + "&bilan=" + bilan + "&idMedecin=" + idMedecin +"&date="+ date;
             lesMedicaments.forEach((med)=>{url+="&medicaments["+med.id+"]="+ med.qte;});
                 let req = this.http
-                         .get(url);
+                         .get(url)
+                         .map((r: Response)=>r.json());
            return req;
 
     }
