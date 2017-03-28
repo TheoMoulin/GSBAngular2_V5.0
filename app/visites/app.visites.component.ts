@@ -28,8 +28,7 @@ export class VisitesComponent {
   motif : string;
   bilan : string;
   afficherRapport : boolean = false;
-  afficherMessage : boolean = false;
-  lblMessage : string ="";
+ messageMAJ : string ="";
   messageEnregistrement : string =""
   typeMessage : string ="";
   constructor(private dataService : DataService){
@@ -49,9 +48,13 @@ export class VisitesComponent {
         this.lesMedecins = null;
   }
   modifierRapport(): void{
-       this.gestionMajRapport = true;
+        this.gestionMajRapport = true;
        this.gestionAjoutRapport = false;
        this.afficherRapport = false;
+       this.typeMessage="";
+       this.lesRapports = null;
+       this.dateVisite = null;
+       this.messageMAJ ="";
   }
   chargerVisites() : void{
        this.titre = "Médecins visité(s) ce jour :";
@@ -67,13 +70,14 @@ export class VisitesComponent {
        this.afficherRapport = true;
   }
   valider(): void{
-       this.afficherMessage = true;
        console.log(this.rapport);
        this.dataService.majRapport(this.rapport.idRapport,this.rapport.motif,this.rapport.bilan)
                                   .subscribe( 
-                                      (data)=>{ this.lblMessage= "Mise à jour effectuée";
+                                      (data)=>{ this.typeMessage ="alert alert-success";
+                                              this.messageMAJ= "Mise à jour effectuée";
                                          }
-                                      ,(error)=>{this.lblMessage= "Merci de réessayer plus tard";}
+                                      ,(error)=>{this.messageMAJ= "Merci de réessayer plus tard";
+                                             this.typeMessage ="alert alert-danger"}
                                               );
    }
    initNouveauRapport(){
@@ -83,6 +87,8 @@ export class VisitesComponent {
        this.dateNouveauRapport = null;
        this.nomMedicament = "";
        this.qteSelect = 1;
+       this.typeMessage="";
+       this.messageEnregistrement ="";
        
 
    }
@@ -130,4 +136,3 @@ export class VisitesComponent {
    }
   
 }
-
